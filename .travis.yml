@@ -12,7 +12,7 @@ before_script:
 
 script:
   - ./vendor/bin/phpcs --standard=vendor/internations/kodierungsregelwerksammlung/ruleset.xml ./src/
-  - phpunit --exclude-group performance
+  - phpunit
 
 notifications:
   email:
