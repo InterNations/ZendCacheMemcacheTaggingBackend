@@ -24,7 +24,7 @@ class MemcacheIntegrationTest extends AbstractTestCase
 
     public function setUp()
     {
-        if (!extension_loaded('memcache')) {
+        if (!class_exists('Memcache')) {
             $this->markTestSkipped('pecl/memcache not installed');
         }
         $this->memcache = new Memcache();
