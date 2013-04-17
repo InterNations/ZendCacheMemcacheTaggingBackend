@@ -8,6 +8,8 @@ before_script:
   - php composer.phar install --dev
   - memcached -p 11211 -d
   - memcached -p 11212 -d
+  - pecl uninstall memcached
+  - pecl install memcache
 
 script:
   - ./vendor/bin/phpcs --standard=vendor/internations/kodierungsregelwerksammlung/ruleset.xml ./src/
