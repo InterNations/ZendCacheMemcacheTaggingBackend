@@ -1,10 +1,15 @@
 {
     "name": "internations/zend-cache-memcache-tagging-backend",
     "description": "Memcache backend for Zend_Cache with tagging support",
+    "license": "MIT",
     "authors": [
         {
             "name": "Lars Strojny",
             "email": "lars.strojny@internations.org"
+        },
+        {
+            "name": "Marc Jakubowski",
+            "email": "marc.jakubowski@internations.org"
         }
     ],
     "require": {
