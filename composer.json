@@ -4,12 +4,12 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Lars Strojny",
-            "email": "lars.strojny@internations.org"
-        },
-        {
             "name": "Marc Jakubowski",
             "email": "marc.jakubowski@internations.org"
+        },
+        {
+            "name": "Lars Strojny",
+            "email": "lars.strojny@internations.org"
         }
     ],
     "require": {
