@@ -16,11 +16,15 @@ class MemcacheTaggingBackend extends BaseMemcachedBackend
     const TAG_ID_PREFIX = 'zct_';
 
     /**
-     * @param Memcache $memcache
+     * @param Memcache|array $options
      */
-    public function __construct(Memcache $memcache)
+    public function __construct($options = [])
     {
-        $this->_memcache = $memcache;
+        if ($options instanceof Memcache) {
+            $this->_memcache = $options;
+        } else {
+            parent::__construct($options);
+        }
     }
 
     /**

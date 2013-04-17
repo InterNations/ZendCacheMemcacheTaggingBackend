@@ -15,15 +15,19 @@ class LibmemcachedTaggingBackend extends BaseLibmemcachedBackend
     const TAG_ID_PREFIX = 'zct_';
 
     /**
-     * @param Memcached $memcache
+     * @param Memcached|array $options
      */
-    public function __construct(Memcached $memcache)
+    public function __construct($options = [])
     {
-        $this->_memcache = $memcache;
+        if ($options instanceof Memcached) {
+            $this->_memcache = $options;
+        } else {
+            parent::__construct($options);
+        }
     }
 
     /**
-     * @return Memcache
+     * @return Memcached
      */
     public function getMemcache()
     {
