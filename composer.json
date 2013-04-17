@@ -1,0 +1,19 @@
+{
+    "name": "internations/zend-cache-memcache-tagging-backend",
+    "description": "Memcache backend for Zend_Cache with tagging support",
+    "authors": [
+        {
+            "name": "Lars Strojny",
+            "email": "lars.strojny@internations.org"
+        }
+    ],
+    "require": {
+        "zendframework/zendframework1": "*"
+    },
+    "require-dev": {
+        "internations/testing-component": "*"
+    },
+    "autoload": {
+        "psr-0": {"InterNations\\Component\\Caching\\Zend\\": "src/"}
+    }
+}
