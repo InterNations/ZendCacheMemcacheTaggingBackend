@@ -16,7 +16,8 @@
         "zendframework/zendframework1": "*"
     },
     "require-dev": {
-        "internations/testing-component": "*"
+        "internations/testing-component": "*",
+        "internations/kodierungsregelwerksammlung": "dev-master"
     },
     "autoload": {
         "psr-0": {"InterNations\\Component\\Caching\\Zend\\": "src/"}
