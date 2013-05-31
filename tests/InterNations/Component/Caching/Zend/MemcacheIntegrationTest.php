@@ -5,6 +5,7 @@ use InterNations\Component\Caching\Zend\MemcacheTaggingBackend;
 use InterNations\Component\Testing\AbstractTestCase;
 use Memcache;
 use Zend_Cache as Cache;
+use Symfony\Component\Process\Process;
 
 /**
  * @group integration
@@ -22,14 +23,54 @@ class MemcacheIntegrationTest extends AbstractTestCase
      */
     private $memcache;
 
+    private static $servers = [];
+
+    public static function setUpBeforeClass()
+    {
+        $command = 'memcached -p %d -l %s';
+        static::$servers[] = new Process(
+            sprintf(
+                $command, 
+                ZEND_CACHE_TAGGING_BACKEND_MEMCACHED1_PORT,
+                ZEND_CACHE_TAGGING_BACKEND_MEMCACHED1_HOST
+            )
+        );
+        static::$servers[] = new Process(
+            sprintf(
+                $command, 
+                ZEND_CACHE_TAGGING_BACKEND_MEMCACHED2_PORT,
+                ZEND_CACHE_TAGGING_BACKEND_MEMCACHED2_HOST
+            )
+        );
+        foreach (static::$servers as $server) {
+            $server->start();
+        }
+        sleep(1);
+    }
+
+    public static function tearDownAfterClass()
+    {
+        foreach (static::$servers as $server) {
+            error_log($server->getErrorOutput());
+            $server->stop();
+        }
+    }
+
     public function setUp()
     {
         if (!class_exists('Memcache')) {
             $this->markTestSkipped('pecl/memcache not installed');
         }
+
         $this->memcache = new Memcache();
-        $this->memcache->addServer('localhost', 11211);
-        $this->memcache->addServer('localhost', 11212);
+        $this->memcache->addServer(
+            ZEND_CACHE_TAGGING_BACKEND_MEMCACHED1_HOST,
+            ZEND_CACHE_TAGGING_BACKEND_MEMCACHED1_PORT
+        );
+        $this->memcache->addServer(
+            ZEND_CACHE_TAGGING_BACKEND_MEMCACHED2_HOST,
+            ZEND_CACHE_TAGGING_BACKEND_MEMCACHED2_PORT
+        );
         $this->backend = new MemcacheTaggingBackend($this->memcache);
     }
 

@@ -1,15 +1,12 @@
 language: php
+
 php:
   - 5.4
   - 5.5
 
 before_script:
   - wget http://getcomposer.org/composer.phar
-  - php composer.phar install --dev
-  - memcached -p 11211 -d
-  - memcached -p 11212 -d
-  - echo "extension = memcache.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-  - echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - php composer.phar install --dev --no-interaction
 
 script:
   - ./vendor/bin/phpcs --standard=vendor/internations/kodierungsregelwerksammlung/ruleset.xml ./src/
