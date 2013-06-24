@@ -1,6 +1,7 @@
 <?php
 namespace InterNations\Component\Caching\Zend;
 
+use OutOfBoundsException;
 use Zend_Cache as Cache;
 use Zend_Cache_Backend_Libmemcached as BaseLibmemcachedBackend;
 use Zend_Cache_Exception as CacheException;
@@ -42,6 +43,11 @@ class LibmemcachedTaggingBackend extends BaseLibmemcachedBackend
             $this->saveTagsById($tags, $id, $specificLifetime);
             $id = $this->createTaggedId($id, $tags);
         }
+
+        if (strlen($id) > 250) {
+            throw new OutOfBoundsException(sprintf('Key "%s" is longer than 250 byte', $id));
+        }
+
         return parent::save($data, $id, [], $specificLifetime);
     }
 
@@ -151,7 +157,7 @@ class LibmemcachedTaggingBackend extends BaseLibmemcachedBackend
         }
 
         ksort($tagValues);
-        return http_build_query($tagValues, null, '--') . '--';
+        return hash('sha256', http_build_query($tagValues, null, '--')) . '--';
     }
 
     protected function createTaggedId($id, array $tags)

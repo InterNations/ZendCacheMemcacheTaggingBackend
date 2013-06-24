@@ -236,7 +236,7 @@ class LibmemcachedTaggingBackendTest extends AbstractTestCase
             ->method('set')
             ->will($this->returnCallback(
                 function ($key, array $data) {
-                    $this->assertSame('zct_tag1=1--zct_tag2=1--id', $key);
+                    $this->assertSame('312d5b52f060ee2469f2a04fe7deb4c38762ce3170123a4908b42a1d16ab84ec--id', $key);
                     $this->assertSame('data', $data[0]);
                     $this->assertInternalType('integer', $data[1]);
                     $this->assertSame(3600, $data[2]);
