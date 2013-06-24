@@ -1,18 +1,18 @@
 <?php
 namespace InterNations\Component\Caching\Tests\Zend;
 
-use Memcache;
-use InterNations\Component\Caching\Zend\MemcacheTaggingBackend;
+use Memcached;
+use InterNations\Component\Caching\Zend\LibmemcachedTaggingBackend;
 
-class MemcacheIntegrationTest extends AbstractIntegrationTest
+class LibmemcacheIntegrationTest extends AbstractIntegrationTest
 {
     public function setUp()
     {
-        if (!class_exists('Memcache')) {
-            $this->markTestSkipped('pecl/memcache not installed');
+        if (!class_exists('Memcached')) {
+            $this->markTestSkipped('pecl/memcached not installed');
         }
 
-        $this->memcache = new Memcache();
+        $this->memcache = new Memcached();
         $this->memcache->addServer(
             ZEND_CACHE_TAGGING_BACKEND_MEMCACHED1_HOST,
             ZEND_CACHE_TAGGING_BACKEND_MEMCACHED1_PORT
@@ -21,6 +21,6 @@ class MemcacheIntegrationTest extends AbstractIntegrationTest
             ZEND_CACHE_TAGGING_BACKEND_MEMCACHED2_HOST,
             ZEND_CACHE_TAGGING_BACKEND_MEMCACHED2_PORT
         );
-        $this->backend = new MemcacheTaggingBackend($this->memcache);
+        $this->backend = new LibmemcachedTaggingBackend($this->memcache);
     }
 }

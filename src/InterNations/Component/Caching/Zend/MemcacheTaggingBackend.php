@@ -117,6 +117,7 @@ class MemcacheTaggingBackend extends BaseMemcachedBackend
                 break;
 
             case Cache::CLEANING_MODE_MATCHING_ANY_TAG:
+            case Cache::CLEANING_MODE_MATCHING_TAG:
                 foreach ($tags as $tagName) {
                     $tagId = $this->createTagId($tagName);
                     if ($this->_memcache->increment($tagId) === false) {
