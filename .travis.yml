@@ -6,8 +6,8 @@ php:
 
 before_script:
   - composer install --dev
-  - sudo apt-get install -y php5-memcached
-  - echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - sudo apt-get install -y php5-memcached php5-memcache
+  - echo -e "extension = memcached.so\nextension = memcache.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
 script:
   - ./vendor/bin/phpcs --standard=vendor/internations/kodierungsregelwerksammlung/ruleset.xml ./src/
