@@ -6,6 +6,7 @@ php:
 
 before_script:
   - composer install --dev
+  - apt-get install -y php5-memcached
 
 script:
   - ./vendor/bin/phpcs --standard=vendor/internations/kodierungsregelwerksammlung/ruleset.xml ./src/
