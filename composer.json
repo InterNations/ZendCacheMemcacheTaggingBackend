@@ -19,7 +19,7 @@
         "internations/testing-component": "*",
         "internations/kodierungsregelwerksammlung": "dev-master",
         "symfony/process": "*",
-        "phpunit/phpunit": "3.*"
+        "phpunit/phpunit": "~4"
     },
     "autoload": {
         "psr-0": {"InterNations\\Component\\Caching\\Zend\\": "src/"}
