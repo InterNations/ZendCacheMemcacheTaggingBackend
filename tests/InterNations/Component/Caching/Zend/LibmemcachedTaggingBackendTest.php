@@ -3,6 +3,7 @@ namespace InterNations\Component\Caching\Tests\Zend;
 
 use InterNations\Component\Testing\AbstractTestCase;
 use InterNations\Component\Caching\Zend\LibmemcachedTaggingBackend;
+use PHPUnit_Framework_Error_Notice as ErrorNoticeException;
 use Zend_Cache;
 use Memcached;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
@@ -19,8 +20,8 @@ class LibmemcachedTaggingBackendTest extends AbstractTestCase
     {
         try {
             $this->memcache = $this->getSimpleMock('Memcached', ['set', 'get', 'add', 'increment', 'getMulti', 'delete', 'flush']);
-        } catch (\Exception $e) {
-            error_log(get_class($e));
+        } catch (ErrorNoticeException $e) {
+            $this->memcache = $this->getSimpleMock('Memcached', ['set', 'get', 'add', 'increment', 'getMulti', 'delete', 'flush']);
         }
         $this->backend = new LibmemcachedTaggingBackend($this->memcache);
     }
