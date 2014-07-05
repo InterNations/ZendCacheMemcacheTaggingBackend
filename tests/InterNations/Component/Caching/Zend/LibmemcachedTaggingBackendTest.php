@@ -17,7 +17,11 @@ class LibmemcachedTaggingBackendTest extends AbstractTestCase
 
     public function setUp()
     {
-        $this->memcache = $this->getSimpleMock('Memcached', ['set', 'get', 'add', 'increment', 'getMulti', 'delete', 'flush']);
+        try {
+            $this->memcache = $this->getSimpleMock('Memcached', ['set', 'get', 'add', 'increment', 'getMulti', 'delete', 'flush']);
+        } catch (\Exception $e) {
+            error_log(get_class($e));
+        }
         $this->backend = new LibmemcachedTaggingBackend($this->memcache);
     }
 
