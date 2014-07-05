@@ -1,5 +1,5 @@
 <?php
-namespace InterNations\Component\Caching\Tests\Zend;
+namespace InterNations\Component\Caching\Tests\Zend\Unit;
 
 use InterNations\Component\Testing\AbstractTestCase;
 use InterNations\Component\Caching\Zend\MemcacheTaggingBackend;
@@ -43,23 +43,6 @@ class MemcacheTaggingBackendTest extends AbstractTestCase
         $this->backend->save('some_data', 'some_id', []);
     }
 
-    public function testSaveTagsByIdCallsSetWithTagIdSuffix()
-    {
-        $tags = ['tag1', 'tag2', 'tag3'];
-        $this->memcache
-            ->expects($this->once())
-            ->method('set')
-            ->with('some_id_tags');
-        $this->memcache
-            ->expects($this->never())
-            ->method('add');
-        $this->memcache
-            ->expects($this->never())
-            ->method('get');
-
-        $this->backend->saveTagsById($tags, 'some_id');
-    }
-
     public function testLoadByIdLoadsTagsById()
     {
         $this->memcache
@@ -93,23 +76,6 @@ class MemcacheTaggingBackendTest extends AbstractTestCase
             ->method('add');
 
         $this->backend->loadTagsById('some_id');
-    }
-
-    public function testLoadTagRevisions()
-    {
-        $tags = [
-            'TAG1' => 4,
-            'TAG2' => 2,
-            'TAG3' => 5,
-        ];
-
-        $this->memcache
-            ->expects($this->once())
-            ->method('get')
-            ->with(['TAG1', 'TAG2', 'TAG3'])
-            ->will($this->returnValue($tags));
-
-        $this->assertSame($tags, $this->backend->loadTagRevisions(['TAG1', 'TAG2', 'TAG3']));
     }
 
     public function testRemoveAlsoRemovesTaggedId()

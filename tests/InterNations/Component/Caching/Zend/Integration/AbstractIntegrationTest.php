@@ -1,5 +1,5 @@
 <?php
-namespace InterNations\Component\Caching\Tests\Zend;
+namespace InterNations\Component\Caching\Tests\Zend\Integration;
 
 use InterNations\Component\Caching\Zend\LibmemcachedTaggingBackend;
 use InterNations\Component\Caching\Zend\MemcacheTaggingBackend;
@@ -15,36 +15,32 @@ use Symfony\Component\Process\Process;
  */
 abstract class AbstractIntegrationTest extends AbstractTestCase
 {
-    /**
-     * @var MemcacheTaggingBackend|LibmemcachedTaggingBackend
-     */
+    /** @var MemcacheTaggingBackend|LibmemcachedTaggingBackend */
     protected $backend;
 
-    /**
-     * @var Memcache|Memcached
-     */
+    /** @var Memcache|Memcached */
     protected $memcache;
 
-    protected static $servers = [];
+    private static $servers = [];
 
     public static function setUpBeforeClass()
     {
         $command = 'memcached -p %d -l %s -u nobody';
-        static::$servers[] = new Process(
+        self::$servers[] = new Process(
             sprintf(
                 $command,
                 ZEND_CACHE_TAGGING_BACKEND_MEMCACHED1_PORT,
                 ZEND_CACHE_TAGGING_BACKEND_MEMCACHED1_HOST
             )
         );
-        static::$servers[] = new Process(
+        self::$servers[] = new Process(
             sprintf(
                 $command,
                 ZEND_CACHE_TAGGING_BACKEND_MEMCACHED2_PORT,
                 ZEND_CACHE_TAGGING_BACKEND_MEMCACHED2_HOST
             )
         );
-        foreach (static::$servers as $server) {
+        foreach (self::$servers as $server) {
             $server->start();
         }
         sleep(1);
@@ -52,7 +48,7 @@ abstract class AbstractIntegrationTest extends AbstractTestCase
 
     public static function tearDownAfterClass()
     {
-        foreach (static::$servers as $server) {
+        foreach (self::$servers as $server) {
             error_log($server->getErrorOutput());
             $server->stop();
         }

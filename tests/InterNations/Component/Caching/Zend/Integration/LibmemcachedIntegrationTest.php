@@ -1,10 +1,10 @@
 <?php
-namespace InterNations\Component\Caching\Tests\Zend;
+namespace InterNations\Component\Caching\Tests\Zend\Integration;
 
 use Memcached;
 use InterNations\Component\Caching\Zend\LibmemcachedTaggingBackend;
 
-class LibmemcacheIntegrationTest extends AbstractIntegrationTest
+class LibmemcachedIntegrationTest extends AbstractIntegrationTest
 {
     public function setUp()
     {

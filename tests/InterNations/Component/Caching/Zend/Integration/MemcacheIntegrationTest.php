@@ -1,5 +1,5 @@
 <?php
-namespace InterNations\Component\Caching\Tests\Zend;
+namespace InterNations\Component\Caching\Tests\Zend\Integration;
 
 use Memcache;
 use InterNations\Component\Caching\Zend\MemcacheTaggingBackend;

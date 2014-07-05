@@ -1,5 +1,5 @@
 <?php
-namespace InterNations\Component\Caching\Tests\Zend;
+namespace InterNations\Component\Caching\Tests\Zend\Unit;
 
 use InterNations\Component\Testing\AbstractTestCase;
 use InterNations\Component\Caching\Zend\LibmemcachedTaggingBackend;
@@ -20,6 +20,7 @@ class LibmemcachedTaggingBackendTest extends AbstractTestCase
     {
         try {
             $this->memcache = $this->getSimpleMock('Memcached', ['set', 'get', 'add', 'increment', 'getMulti', 'delete', 'flush']);
+        // Hack to fix mocking issue
         } catch (ErrorNoticeException $e) {
             $this->memcache = $this->getSimpleMock('Memcached', ['set', 'get', 'add', 'increment', 'getMulti', 'delete', 'flush']);
         }
@@ -46,23 +47,6 @@ class LibmemcachedTaggingBackendTest extends AbstractTestCase
             ->method('get');
 
         $this->backend->save('some_data', 'some_id', []);
-    }
-
-    public function testSaveTagsByIdCallsSetWithTagIdSuffix()
-    {
-        $tags = ['tag1', 'tag2', 'tag3'];
-        $this->memcache
-            ->expects($this->once())
-            ->method('set')
-            ->with('some_id_tags');
-        $this->memcache
-            ->expects($this->never())
-            ->method('add');
-        $this->memcache
-            ->expects($this->never())
-            ->method('get');
-
-        $this->backend->saveTagsById($tags, 'some_id');
     }
 
     public function testLoadByIdLoadsTagsById()
