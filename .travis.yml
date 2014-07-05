@@ -7,6 +7,7 @@ php:
 
 before_script:
   - composer install
+  - sudo apt-get update
   - sudo apt-get install -y php5-memcached php5-memcache
   - echo -e "extension = memcached.so\nextension = memcache.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
