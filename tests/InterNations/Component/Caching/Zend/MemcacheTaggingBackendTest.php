@@ -4,10 +4,16 @@ namespace InterNations\Component\Caching\Tests\Zend;
 use InterNations\Component\Testing\AbstractTestCase;
 use InterNations\Component\Caching\Zend\MemcacheTaggingBackend;
 use Zend_Cache;
+use Memcache;
+use PHPUnit_Framework_MockObject_MockObject as MockObject;
 
 class MemcacheTaggingBackendTest extends AbstractTestCase
 {
+    /** @var Memcache|MockObject */
     private $memcache;
+
+    /** @var MemcacheTaggingBackend */
+    private $backend;
 
     public function setUp()
     {
