@@ -15,11 +15,11 @@ class MemcacheIntegrationTest extends AbstractIntegrationTest
         $this->memcache = new Memcache();
         $this->memcache->addServer(
             ZEND_CACHE_TAGGING_BACKEND_MEMCACHED1_HOST,
-            ZEND_CACHE_TAGGING_BACKEND_MEMCACHED1_PORT
+            (int) ZEND_CACHE_TAGGING_BACKEND_MEMCACHED1_PORT
         );
         $this->memcache->addServer(
             ZEND_CACHE_TAGGING_BACKEND_MEMCACHED2_HOST,
-            ZEND_CACHE_TAGGING_BACKEND_MEMCACHED2_PORT
+            (int) ZEND_CACHE_TAGGING_BACKEND_MEMCACHED2_PORT
         );
         $this->backend = new MemcacheTaggingBackend($this->memcache);
     }
