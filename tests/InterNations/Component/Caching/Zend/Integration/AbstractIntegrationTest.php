@@ -25,7 +25,7 @@ abstract class AbstractIntegrationTest extends AbstractTestCase
 
     public static function setUpBeforeClass()
     {
-        $command = 'memcached -p %d -l %s -u nobody';
+        $command = 'exec memcached -p %d -l %s -u nobody';
         self::$servers[] = new Process(
             sprintf(
                 $command,
@@ -129,9 +129,9 @@ abstract class AbstractIntegrationTest extends AbstractTestCase
 
     public function tearDown()
     {
-    if (!$this->memcache) {
-return;
-    }
+        if (!$this->memcache) {
+            return;
+        }
         $this->memcache->flush();
     }
 
