@@ -24,7 +24,7 @@ class MemcacheTaggingBackend extends BaseMemcachedBackend
         return $this->_memcache;
     }
 
-    protected function loadTagRevisions(array $tags = [])
+    public function loadTagRevisions(array $tags = [])
     {
         return $this->_memcache->get($tags);
     }

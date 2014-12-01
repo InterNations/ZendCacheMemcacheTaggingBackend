@@ -23,4 +23,29 @@ class LibmemcachedIntegrationTest extends AbstractIntegrationTest
         );
         $this->backend = new LibmemcachedTaggingBackend($this->memcache);
     }
+
+    public function provideBackendsWithOnlyOneServer()
+    {
+        $backends = [];
+
+        $memcache = new Memcached();
+        $memcache->addServers(
+            [
+                [ZEND_CACHE_TAGGING_BACKEND_MEMCACHED1_HOST, (int) ZEND_CACHE_TAGGING_BACKEND_MEMCACHED1_PORT],
+                [ZEND_CACHE_TAGGING_BACKEND_MEMCACHED2_HOST, (int) ZEND_CACHE_TAGGING_BACKEND_MEMCACHED_INVALID_PORT],
+            ]
+        );
+        $backends[] = [new LibmemcachedTaggingBackend($memcache)];
+
+        $memcache = new Memcached();
+        $memcache->addServers(
+            [
+                [ZEND_CACHE_TAGGING_BACKEND_MEMCACHED1_HOST, (int) ZEND_CACHE_TAGGING_BACKEND_MEMCACHED_INVALID_PORT],
+                [ZEND_CACHE_TAGGING_BACKEND_MEMCACHED2_HOST, (int) ZEND_CACHE_TAGGING_BACKEND_MEMCACHED2_PORT],
+            ]
+        );
+        $backends[] = [new LibmemcachedTaggingBackend($memcache)];
+
+        return $backends;
+    }
 }

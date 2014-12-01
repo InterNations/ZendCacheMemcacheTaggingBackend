@@ -32,5 +32,6 @@
         <const name="ZEND_CACHE_TAGGING_BACKEND_MEMCACHED1_HOST" value="localhost"/>
         <const name="ZEND_CACHE_TAGGING_BACKEND_MEMCACHED2_PORT" value="35112"/>
         <const name="ZEND_CACHE_TAGGING_BACKEND_MEMCACHED2_HOST" value="localhost"/>
+        <const name="ZEND_CACHE_TAGGING_BACKEND_MEMCACHED_INVALID_PORT" value="35113"/>
     </php>
 </phpunit>

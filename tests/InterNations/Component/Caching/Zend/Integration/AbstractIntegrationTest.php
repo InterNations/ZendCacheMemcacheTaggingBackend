@@ -8,6 +8,7 @@ use Memcache;
 use Memcached;
 use Zend_Cache as Cache;
 use Symfony\Component\Process\Process;
+use Zend_Cache_Backend_ExtendedInterface;
 
 /**
  * @group integration
@@ -26,31 +27,43 @@ abstract class AbstractIntegrationTest extends AbstractTestCase
     public static function setUpBeforeClass()
     {
         $command = 'exec memcached -p %d -l %s -u nobody';
-        self::$servers[] = new Process(
+        self::$servers[] = $server = new Process(
             sprintf(
                 $command,
                 ZEND_CACHE_TAGGING_BACKEND_MEMCACHED1_PORT,
                 ZEND_CACHE_TAGGING_BACKEND_MEMCACHED1_HOST
             )
         );
-        self::$servers[] = new Process(
+        $server->start();
+
+        self::$servers[] = $server = new Process(
             sprintf(
                 $command,
                 ZEND_CACHE_TAGGING_BACKEND_MEMCACHED2_PORT,
                 ZEND_CACHE_TAGGING_BACKEND_MEMCACHED2_HOST
             )
         );
-        foreach (self::$servers as $server) {
-            $server->start();
-        }
+        $server->start();
+
         sleep(1);
+
+        foreach (self::$servers as $server) {
+            if ($errorOutput = $server->getErrorOutput()) {
+                error_log('startup: ' . $errorOutput);
+            }
+        }
     }
 
     public static function tearDownAfterClass()
     {
+        /** @var Process $server */
         foreach (self::$servers as $server) {
-            error_log($server->getErrorOutput());
-            $server->stop();
+            if ($errorOutput = $server->getErrorOutput()) {
+                error_log('stopping: ' . $errorOutput);
+            }
+            if ($server->isRunning()) {
+                $server->stop(0);
+            }
         }
     }
 
@@ -132,7 +145,11 @@ abstract class AbstractIntegrationTest extends AbstractTestCase
         if (!$this->memcache) {
             return;
         }
-        $this->memcache->flush();
+
+        if ($this->getName(false) !== 'testOneInstanceFails') {
+            // wouldn't work with one server missing in the pool
+            $this->memcache->flush();
+        }
     }
 
     public static function repeat()
@@ -143,5 +160,40 @@ abstract class AbstractIntegrationTest extends AbstractTestCase
         }
 
         return $args;
+    }
+
+    abstract public function provideBackendsWithOnlyOneServer();
+
+    /**
+     * @param Zend_Cache_Backend_ExtendedInterface $backend
+     * @dataProvider provideBackendsWithOnlyOneServer
+     * @group fails
+     */
+    public function testUseTagsWithOnlyOneInstance(Zend_Cache_Backend_ExtendedInterface $backend)
+    {
+        $this->assertTrue($backend->save('data_1', 'entry_123456_18', ['entry_18']));
+        $this->assertSame('data_1', $backend->load('entry_123456_18'));
+
+        $backend->clean(Cache::CLEANING_MODE_MATCHING_ANY_TAG, ['entry_18']);
+
+        $this->assertFalse($backend->load('entry_123456_18'));
+    }
+
+    /**
+     * @throws \Zend_Cache_Exception
+     * @group fails
+     */
+    public function testOneInstanceFails()
+    {
+        $key = '0nag_entry_123456_18';
+        $this->assertTrue($this->backend->save('data_1', $key, ['entry_18']));
+        $this->assertSame('data_1', $this->backend->load($key));
+
+        $this->backend->clean(Cache::CLEANING_MODE_MATCHING_ANY_TAG, ['entry_18']);
+
+        self::$servers[1]->stop(0);
+        sleep(1);
+
+        $this->assertFalse($this->backend->load($key));
     }
 }

@@ -23,4 +23,32 @@ class MemcacheIntegrationTest extends AbstractIntegrationTest
         );
         $this->backend = new MemcacheTaggingBackend($this->memcache);
     }
-}
+
+    public function provideBackendsWithOnlyOneServer()
+    {
+        $backends = [];
+
+        $memcache = new Memcache();
+        $memcache->addServer(
+            ZEND_CACHE_TAGGING_BACKEND_MEMCACHED1_HOST,
+            (int) ZEND_CACHE_TAGGING_BACKEND_MEMCACHED1_PORT
+        );
+        $memcache->addServer(
+            ZEND_CACHE_TAGGING_BACKEND_MEMCACHED2_HOST,
+            (int) ZEND_CACHE_TAGGING_BACKEND_MEMCACHED_INVALID_PORT
+        );
+        $backends[] = [new MemcacheTaggingBackend($memcache)];
+
+        $memcache = new Memcache();
+        $memcache->addServer(
+            ZEND_CACHE_TAGGING_BACKEND_MEMCACHED1_HOST,
+            (int) ZEND_CACHE_TAGGING_BACKEND_MEMCACHED_INVALID_PORT
+        );
+        $memcache->addServer(
+            ZEND_CACHE_TAGGING_BACKEND_MEMCACHED2_HOST,
+            (int) ZEND_CACHE_TAGGING_BACKEND_MEMCACHED2_PORT
+        );
+        $backends[] = [new MemcacheTaggingBackend($memcache)];
+
+        return $backends;
+    }}

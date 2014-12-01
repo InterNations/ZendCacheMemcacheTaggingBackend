@@ -135,5 +135,5 @@ trait MemcacheTaggingTrait
         return parent::save($tags, $this->createTagsRelationId($id), [], $specificLifetime);
     }
 
-    abstract protected function loadTagRevisions(array $tags = []);
+    abstract public function loadTagRevisions(array $tags = []);
 }
