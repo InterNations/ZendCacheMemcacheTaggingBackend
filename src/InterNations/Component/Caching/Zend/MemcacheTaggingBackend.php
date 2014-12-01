@@ -18,7 +18,7 @@ class MemcacheTaggingBackend extends BaseMemcachedBackend
         }
     }
 
-    /** * @return Memcache */
+    /** @return Memcache */
     public function getMemcache()
     {
         return $this->_memcache;
