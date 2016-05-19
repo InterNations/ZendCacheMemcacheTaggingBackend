@@ -29,6 +29,7 @@ trait MemcacheTaggingTrait
         if ($tags = $this->loadTagsById($id)) {
             $id = $this->createTaggedId($id, $tags);
         }
+
         return parent::load($id);
     }
 
@@ -46,6 +47,7 @@ trait MemcacheTaggingTrait
             case Cache::CLEANING_MODE_MATCHING_TAG:
                 foreach ($tags as $tagName) {
                     $tagId = $this->createTagId($tagName);
+
                     if ($this->_memcache->increment($tagId) === false) {
                         $this->_memcache->set($tagId, 1);
                     }
@@ -127,6 +129,7 @@ trait MemcacheTaggingTrait
                 $metadata['tags'] = $tags;
             }
         }
+
         return $metadata;
     }
 
