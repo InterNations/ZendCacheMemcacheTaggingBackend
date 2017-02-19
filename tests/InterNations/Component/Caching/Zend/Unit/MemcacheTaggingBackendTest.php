@@ -17,7 +17,7 @@ class MemcacheTaggingBackendTest extends AbstractTestCase
 
     public function setUp()
     {
-        $this->memcache = $this->getSimpleMock('Memcache', ['increment', 'set', 'add', 'get', 'delete', 'flush']);
+        $this->memcache = $this->createPartialMock('Memcache', ['increment', 'set', 'add', 'get', 'delete', 'flush']);
         $this->backend = new MemcacheTaggingBackend($this->memcache);
     }
 
@@ -171,7 +171,8 @@ class MemcacheTaggingBackendTest extends AbstractTestCase
 
     public function testUnknownCleaningModeThrowsException()
     {
-        $this->setExpectedException('\Zend_Cache_Exception', 'Invalid clean mode');
+        $this->expectException('\Zend_Cache_Exception');
+        $this->expectExceptionMessage('Invalid clean mode');
 
         $this->backend->clean('fooMode');
     }

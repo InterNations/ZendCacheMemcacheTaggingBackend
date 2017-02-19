@@ -113,10 +113,9 @@ abstract class AbstractIntegrationTest extends AbstractTestCase
     {
         $key = str_repeat('k', 185);
 
-        $this->setExpectedException(
-            'OutOfBoundsException',
-            'Key "312d5b52f060ee2469f2a04fe7deb4c38762ce3170123a4908b42a1d16ab84ec--kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk" is longer than 250 byte'
-        );
+        $this->expectException('OutOfBoundsException');
+
+        $this->expectExceptionMessage('Key "312d5b52f060ee2469f2a04fe7deb4c38762ce3170123a4908b42a1d16ab84ec--kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk" is longer than 250 byte');
         $this->backend->save('overlong', $key, ['tag1', 'tag2']);
     }
 

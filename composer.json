@@ -19,8 +19,8 @@
     "require-dev": {
         "internations/testing-component": "*",
         "internations/kodierungsregelwerksammlung": "dev-master",
-        "symfony/process": "*",
-        "phpunit/phpunit": "~4"
+        "symfony/process": "~3",
+        "phpunit/phpunit": "~6"
     },
     "autoload": {
         "psr-0": {"InterNations\\Component\\Caching\\Zend\\": "src/"}
