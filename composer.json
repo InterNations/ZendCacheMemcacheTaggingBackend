@@ -14,7 +14,7 @@
     ],
     "require": {
         "php": ">=5.6",
-        "zendframework/zendframework1": "*"
+        "zendframework/zendframework1": "~1"
     },
     "require-dev": {
         "internations/testing-component": "*",
