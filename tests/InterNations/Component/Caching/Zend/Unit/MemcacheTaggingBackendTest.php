@@ -17,6 +17,10 @@ class MemcacheTaggingBackendTest extends AbstractTestCase
 
     public function setUp()
     {
+        if (!class_exists('Memcache')) {
+            $this->markTestSkipped('pecl/memcache not installed');
+        }
+
         $this->memcache = $this->createPartialMock('Memcache', ['increment', 'set', 'add', 'get', 'delete', 'flush']);
         $this->backend = new MemcacheTaggingBackend($this->memcache);
     }
