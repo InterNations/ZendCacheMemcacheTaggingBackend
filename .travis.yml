@@ -13,7 +13,7 @@ matrix:
 
 before_script:
   - composer install
-  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ] ; then sudo apt-get update && sudo apt-get install -y php5-memcached php5-memcache && echo -e "extension = memcached.so\nextension = memcache.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini ; fi'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ] ; then sudo apt-get update && sudo apt-get install -y php7-memcached php7-memcache && echo -e "extension = memcached.so\nextension = memcache.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini ; fi'
 
 script:
   - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ] ; then ./vendor/bin/phpcs --standard=vendor/internations/kodierungsregelwerksammlung/ruleset.xml ./src/ ; fi'
