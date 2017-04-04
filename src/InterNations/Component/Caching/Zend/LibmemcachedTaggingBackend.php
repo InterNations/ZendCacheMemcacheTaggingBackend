@@ -26,6 +26,6 @@ class LibmemcachedTaggingBackend extends BaseLibmemcachedBackend
 
     public function loadTagRevisions(array $tags = [])
     {
-        return $this->_memcache->getMulti($tags);
+        return $this->_memcache->getMulti($tags) ?: [];
     }
 }
