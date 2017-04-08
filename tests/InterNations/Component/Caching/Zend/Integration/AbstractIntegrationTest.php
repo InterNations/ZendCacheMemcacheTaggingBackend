@@ -21,7 +21,8 @@ abstract class AbstractIntegrationTest extends AbstractTestCase
     /** @var Memcache|Memcached */
     protected $memcache;
 
-    private static $servers = [];
+    /** @var Process[] */
+    protected static $servers = [];
 
     public static function setUpBeforeClass()
     {
@@ -40,15 +41,25 @@ abstract class AbstractIntegrationTest extends AbstractTestCase
                 ZEND_CACHE_TAGGING_BACKEND_MEMCACHED2_HOST
             )
         );
-        foreach (self::$servers as $server) {
+        self::startAllServers();
+    }
+
+    public static function tearDownAfterClass()
+    {
+        static::stopAllServers();
+    }
+
+    protected static function startAllServers()
+    {
+        foreach (static::$servers as $server) {
             $server->start();
         }
         sleep(1);
     }
 
-    public static function tearDownAfterClass()
+    protected static function stopAllServers()
     {
-        foreach (self::$servers as $server) {
+        foreach (static::$servers as $server) {
             error_log($server->getErrorOutput());
             $server->stop();
         }
