@@ -28,7 +28,7 @@ class LibmemcachedIntegrationTest extends AbstractIntegrationTest
         $this->backend = new LibmemcachedTaggingBackend($this->memcache);
     }
 
-    public function testReturnEmptyArrayOnConnectionFailure(): void
+    public function testReturnEmptyArrayOnConnectionFailure()
     {
         $this->backend->save('FooBar', 'id1122', ['tag1', 'tag2', 'tag3']);
 
