@@ -33,15 +33,15 @@ class LibmemcachedIntegrationTest extends AbstractIntegrationTest
         $this->backend->save('FooBar', 'id1122', ['tag1', 'tag2', 'tag3']);
 
         $result = $this->backend->loadTagRevisions(static::STORED_TAGS);
-        $this->assertEquals(Memcached::RES_SUCCESS, $this->backend->getMemcache()->getResultCode());
+        $this->assertSame(Memcached::RES_SUCCESS, $this->backend->getMemcache()->getResultCode());
         $this->assertInternalType('array', $result);
 
         static::stopAllServers();
 
         $resultAfterConnectionFailure = $this->backend->loadTagRevisions(static::STORED_TAGS);
 
-        $this->assertEquals(static::MEMCACHED_CONNECTION_FAILURE, $this->backend->getMemcache()->getResultCode());
-        $this->assertEquals([], $resultAfterConnectionFailure);
+        $this->assertSame(static::MEMCACHED_CONNECTION_FAILURE, $this->backend->getMemcache()->getResultCode());
+        $this->assertSame([], $resultAfterConnectionFailure);
 
         //restart servers for other tests
         static::startAllServers();
