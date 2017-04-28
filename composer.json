@@ -1,28 +1,35 @@
 {
-    "name": "internations/zend-cache-memcache-tagging-backend",
-    "description": "Memcache backend for Zend_Cache with tagging support",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Marc Jakubowski",
-            "email": "marc.jakubowski@internations.org"
-        },
-        {
-            "name": "Lars Strojny",
-            "email": "lars.strojny@internations.org"
-        }
-    ],
-    "require": {
-        "php": "~7",
-        "zendframework/zendframework1": "~1"
+  "name": "internations/zend-cache-memcache-tagging-backend",
+  "description": "Memcache backend for Zend_Cache with tagging support",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Marc Jakubowski",
+      "email": "marc.jakubowski@internations.org"
     },
-    "require-dev": {
-        "internations/testing-component": "*",
-        "internations/kodierungsregelwerksammlung": "dev-master",
-        "symfony/process": "~3",
-        "phpunit/phpunit": "~6"
-    },
-    "autoload": {
-        "psr-0": {"InterNations\\Component\\Caching\\Zend\\": "src/"}
+    {
+      "name": "Lars Strojny",
+      "email": "lars.strojny@internations.org"
     }
+  ],
+  "require": {
+    "php": "~7",
+    "zendframework/zendframework1": "~1"
+  },
+  "require-dev": {
+    "internations/testing-component": "*",
+    "internations/kodierungsregelwerksammlung": "dev-master",
+    "symfony/process": "~3",
+    "phpunit/phpunit": "~6"
+  },
+  "autoload": {
+    "psr-0": {
+      "InterNations\\Component\\Caching\\Zend\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "InterNations\\Component\\Caching\\Tests\\Zend\\": "tests/"
+    }
+  }
 }
