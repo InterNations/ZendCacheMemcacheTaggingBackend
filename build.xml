@@ -27,7 +27,7 @@
          <exec executable="./vendor/bin/phpcs" failonerror="true">
             <arg value="--standard=vendor/internations/kodierungsregelwerksammlung/ruleset.xml"/>
             <arg value="--report=checkstyle" />
-             <arg value="--exclude=InterNations.Syntax.MethodTypeHints"/>
+            <arg value="--exclude=InterNations.Syntax.MethodTypeHints"/>
             <arg value="--report-file=${basedir}/build/logs/checkstyle.xml" />
             <arg value="./src/"/>
          </exec>
