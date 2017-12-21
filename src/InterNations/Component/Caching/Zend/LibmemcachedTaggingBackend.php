@@ -18,8 +18,7 @@ class LibmemcachedTaggingBackend extends BaseLibmemcachedBackend
         }
     }
 
-    /** @return Memcached */
-    public function getMemcache()
+    public function getMemcache(): Memcached
     {
         return $this->_memcache;
     }

@@ -38,7 +38,8 @@ class LibmemcachedTaggingBackendTest extends AbstractTestCase
         $this->memcache
             ->expects($this->once())
             ->method('set')
-            ->with('some_id');
+            ->with('some_id')
+            ->willReturn(true);
         $this->memcache
             ->expects($this->never())
             ->method('add');
@@ -209,12 +210,14 @@ class LibmemcachedTaggingBackendTest extends AbstractTestCase
         $this->memcache
             ->expects($this->at(0))
             ->method('set')
-            ->will($this->returnCallback(function ($key, array $data) {
+            ->willReturnCallback(function ($key, array $data) {
                 $this->assertSame('id_tags', $key);
                 $this->assertEquals(['tag1', 'tag2'], $data[0]);
                 $this->assertInternalType('integer', $data[1], 'Timestamp');
                 $this->assertSame(3600, $data[2]);
-            }));
+
+                return true;
+            });
         $this->memcache
             ->expects($this->at(1))
             ->method('getMulti')
@@ -223,22 +226,26 @@ class LibmemcachedTaggingBackendTest extends AbstractTestCase
         $this->memcache
             ->expects($this->at(2))
             ->method('set')
-            ->with('zct_tag1', 1);
+            ->with('zct_tag1', 1)
+            ->willReturn(true);
         $this->memcache
             ->expects($this->at(3))
             ->method('set')
-            ->with('zct_tag2', 1);
+            ->with('zct_tag2', 1)
+            ->willReturn(true);
         $this->memcache
             ->expects($this->at(4))
             ->method('set')
-            ->will($this->returnCallback(
+            ->willReturnCallback(
                 function ($key, array $data) {
                     $this->assertSame('312d5b52f060ee2469f2a04fe7deb4c38762ce3170123a4908b42a1d16ab84ec--id', $key);
                     $this->assertSame('data', $data[0]);
                     $this->assertInternalType('integer', $data[1]);
                     $this->assertSame(3600, $data[2]);
+
+                    return true;
                 }
-            ));
+            );
 
         $this->backend->save('data', 'id', array('tag2', 'tag2', 'tag1', 'tag2'));
     }

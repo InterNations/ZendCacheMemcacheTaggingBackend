@@ -4,24 +4,18 @@ namespace InterNations\Component\Caching\Zend;
 use Zend_Cache_Backend_Memcached as BaseMemcacheBackend;
 use Memcache;
 
-/**
- * Had to be overwritten because the default doesn't support
- * providing a fully configured Memcache instance and fetching it
- */
 class MemcacheBackend extends BaseMemcacheBackend
 {
     /**
-     * @param Memcache $memcache
+     * Constructor is overridden because the parent implementation does not support passing a fully configured
+     * Memcached instance
      */
     public function __construct(Memcache $memcache)
     {
         $this->_memcache = $memcache;
     }
 
-    /**
-     * @return Memcache
-     */
-    public function getMemcache()
+    public function getMemcache(): Memcache
     {
         return $this->_memcache;
     }
