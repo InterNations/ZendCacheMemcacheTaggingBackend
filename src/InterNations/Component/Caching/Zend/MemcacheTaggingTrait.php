@@ -140,7 +140,7 @@ trait MemcacheTaggingTrait
 
     /**
      * @param string[] $tags
-     * @return array|boolean
+     * @return array|bool
      */
     abstract protected function loadTagRevisions(array $tags = []);
 }
