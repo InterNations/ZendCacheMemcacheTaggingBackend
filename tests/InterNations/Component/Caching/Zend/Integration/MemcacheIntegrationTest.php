@@ -6,7 +6,7 @@ use InterNations\Component\Caching\Zend\MemcacheTaggingBackend;
 
 class MemcacheIntegrationTest extends AbstractIntegrationTest
 {
-    public function setUp()
+    public function setUp(): void
     {
         if (!class_exists('Memcache')) {
             $this->markTestSkipped('pecl/memcache not installed');

@@ -10,7 +10,7 @@ class LibmemcachedIntegrationTest extends AbstractIntegrationTest
     const STORED_TAGS = ['zct_tag1', 'zct_tag2', 'zct_tag3'];
     const MEMCACHED_CONNECTION_FAILURE = 3;
 
-    public function setUp()
+    public function setUp(): void
     {
         if (!class_exists('Memcached')) {
             $this->markTestSkipped('pecl/memcached not installed');
