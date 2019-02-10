@@ -137,7 +137,7 @@ abstract class AbstractIntegrationTest extends AbstractTestCase
         $this->assertSame($expected, $record[0]);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         if (!$this->memcache) {
             return;
