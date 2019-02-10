@@ -24,7 +24,7 @@ abstract class AbstractIntegrationTest extends AbstractTestCase
     /** @var Process[] */
     protected static $servers = [];
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         $command = 'exec memcached -p %d -l %s -u nobody';
         self::$servers[] = new Process(
@@ -44,7 +44,7 @@ abstract class AbstractIntegrationTest extends AbstractTestCase
         self::startAllServers();
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         static::stopAllServers();
     }
