@@ -16,7 +16,7 @@ class LibmemcachedTaggingBackendTest extends AbstractTestCase
     /** @var LibmemcachedTaggingBackend */
     private $backend;
 
-    public function setUp()
+    public function setUp(): void
     {
         try {
             $this->memcache = $this->createPartialMock('Memcached', ['set', 'get', 'add', 'increment', 'getMulti', 'delete', 'flush']);
@@ -203,7 +203,6 @@ class LibmemcachedTaggingBackendTest extends AbstractTestCase
         $capabilities = $this->backend->getCapabilities();
         $this->assertTrue($capabilities['tags']);
     }
-
 
     public function testTagsAreUnifiedAndSorted()
     {
