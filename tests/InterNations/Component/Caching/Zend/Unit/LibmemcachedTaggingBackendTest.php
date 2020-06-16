@@ -19,7 +19,7 @@ class LibmemcachedTaggingBackendTest extends AbstractTestCase
     public function setUp(): void
     {
         try {
-            $this->memcache = $this->createMock('Memcached');
+            $this->memcache = @$this->createMock('Memcached');
         // Hack to fix mocking issue
         } catch (ErrorNoticeException $e) {
             $this->memcache = $this->createPartialMock('Memcached', ['set', 'get', 'add', 'increment', 'getMulti', 'delete', 'flush']);
