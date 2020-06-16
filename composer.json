@@ -14,12 +14,12 @@
   ],
   "require": {
     "php": "~7",
-    "zendframework/zendframework1": "~1"
+    "zendframework/zendframework1": "^1"
   },
   "require-dev": {
-    "internations/testing-component": "*",
-    "internations/kodierungsregelwerksammlung": "dev-master",
-    "symfony/process": "~3",
+    "internations/testing-component": "^1",
+    "internations/kodierungsregelwerksammlung": "^0.35.0",
+    "symfony/process": ">=4",
     "phpunit/phpunit": "~6"
   },
   "autoload": {
