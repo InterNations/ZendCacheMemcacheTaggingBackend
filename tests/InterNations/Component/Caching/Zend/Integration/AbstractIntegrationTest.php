@@ -26,11 +26,7 @@ abstract class AbstractIntegrationTest extends AbstractTestCase
 
     private static function createCommand(int $port, string $host): array
     {
-        $cmd = ['memcached', '-p', $port, '-l', $host, '-u nobody'];
-
-        var_dump($port, $host);
-
-        return $cmd;
+        return ['memcached', '-p', $port, '-l', $host, '-u nobody'];
     }
 
     public static function setUpBeforeClass(): void
