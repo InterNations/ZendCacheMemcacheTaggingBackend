@@ -24,22 +24,22 @@ abstract class AbstractIntegrationTest extends AbstractTestCase
     /** @var Process[] */
     protected static $servers = [];
 
+    private static function createCommand(int $port, string $host): array
+    {
+        $cmd = ['memcached', '-p', $port, '-l', $host, '-u nobody'];
+
+        var_dump($port, $host);
+
+        return $cmd;
+    }
+
     public static function setUpBeforeClass(): void
     {
-        $command = 'exec memcached -p %d -l %s -u nobody';
         self::$servers[] = new Process(
-            sprintf(
-                $command,
-                ZEND_CACHE_TAGGING_BACKEND_MEMCACHED1_PORT,
-                ZEND_CACHE_TAGGING_BACKEND_MEMCACHED1_HOST
-            )
+            self::createCommand(ZEND_CACHE_TAGGING_BACKEND_MEMCACHED1_PORT, ZEND_CACHE_TAGGING_BACKEND_MEMCACHED1_HOST)
         );
         self::$servers[] = new Process(
-            sprintf(
-                $command,
-                ZEND_CACHE_TAGGING_BACKEND_MEMCACHED2_PORT,
-                ZEND_CACHE_TAGGING_BACKEND_MEMCACHED2_HOST
-            )
+            self::createCommand(ZEND_CACHE_TAGGING_BACKEND_MEMCACHED2_PORT, ZEND_CACHE_TAGGING_BACKEND_MEMCACHED2_HOST)
         );
         self::startAllServers();
     }
@@ -148,7 +148,7 @@ abstract class AbstractIntegrationTest extends AbstractTestCase
     public static function repeat()
     {
         $args = [];
-        for ($a = 0; $a < 100; ++$a) {
+        for ($a = 0; $a < 10; ++$a) {
             $args[] = [];
         }
 
